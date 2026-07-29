@@ -69,7 +69,7 @@ const corporateTax = computed(() => getCorporateTax(cGrossIncome.value - employm
             <!-- Row 3: Gross Income side-by-side with Operational Company at bottom -->
             <div class="split">
                 <Tooltip :text="$t('hint.capitalist.corporateTax')">
-                    <div class="parameter-icon icon-income" />
+                    <div class="parameter-label">{{ $t('taxes.grossIncome') }}</div>
                 </Tooltip>
                 <div class="capitalist-parameter parameter-gross-income">
                     <div class="gross-income-box">
