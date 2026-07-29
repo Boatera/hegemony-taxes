@@ -30,7 +30,7 @@ const imfAlertTriggered = computed(() => {
         <div class="state-parameters">
             <div class="split">
                 <Tooltip :text="$t('hint.state.treasury')">
-                    <div class="parameter-icon icon-treasury" />
+                    <div class="parameter-label">{{ $t('taxes.treasury') }}</div>
                 </Tooltip>
                 <div class="state-parameter parameter-treasury">
                     <NumberInput :min="0" :max="999" :intervalTimeout="40" v-model.number="sTreasury" />

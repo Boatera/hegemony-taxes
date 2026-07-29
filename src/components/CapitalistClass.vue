@@ -180,22 +180,5 @@ const corporateTax = computed(() => getCorporateTax(cGrossIncome.value - employm
     .icon-income {
         background-size: 90%;
     }
-
-    .split .tooltip-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .parameter-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-align: center;
-        line-height: 1.1;
-    }
 }
 </style>
