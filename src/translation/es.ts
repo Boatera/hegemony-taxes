@@ -19,6 +19,9 @@ export default {
         loans: 'Préstamos',
         neededLoans: 'Nuevos préstamos necesarios',
         totalLoans: 'Préstamos totales',
+        treasuryAfterWages: 'Tesorería tras salarios',
+        totalTaxes: 'Impuestos totales',
+        finalTreasury: 'Tesorería final',
     },
     policy: {
         fiscal: 'Política fiscal',

@@ -3,29 +3,10 @@ import { computed } from 'vue';
 import { getPolicyStore } from '@/stores/policies';
 import { getClassStore } from '@/stores/classes';
 import Tooltip from '@/components/Tooltip.vue';
+import { getCorporateTax } from '@/utils/taxes';
 
 const { tax, taxMultiplier } = getPolicyStore();
 const { cBusinesses, cRevenue, cWages, cFoodSold } = getClassStore();
-
-const corporateTaxTable = {
-    4: [0, 0, 0],
-    9: [1, 2, 2],
-    24: [5, 5, 4],
-    49: [12, 10, 7],
-    99: [24, 15, 10],
-    199: [40, 30, 20],
-    299: [100, 70, 40],
-    99999: [160, 120, 60],
-};
-
-function getCorporateTax(income: number, policy: number): number {
-    for (const [key, value] of Object.entries(corporateTaxTable)) {
-        if (income <= Number(key)) {
-            return value[policy] ?? NaN;
-        }
-    }
-    return NaN;
-}
 
 const cGrossIncome = computed(() => cRevenue.value - cWages.value + cFoodSold.value);
 const employmentTax = computed(() => taxMultiplier.value * cBusinesses.value);

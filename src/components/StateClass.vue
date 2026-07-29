@@ -3,17 +3,31 @@ import { computed } from 'vue';
 import { getPolicyStore } from '@/stores/policies';
 import { getClassStore } from '@/stores/classes';
 import Tooltip from '@/components/Tooltip.vue';
+import { getCorporateTax } from '@/utils/taxes';
 
-const { fiscal } = getPolicyStore();
-const { sTreasury, sWages, sLoans } = getClassStore();
+const { fiscal, tax, taxMultiplier, incomeTax } = getPolicyStore();
+const {
+    sTreasury,
+    sWages,
+    sLoans,
+    population,
+    mBusinesses,
+    mEmployments,
+    cBusinesses,
+    cRevenue,
+    cWages,
+    cFoodSold,
+} = getClassStore();
 
+// 1. Treasury after Wages & Loans
 const netTreasury = computed(() => sTreasury.value - sWages.value);
 const deficit = computed(() => (netTreasury.value < 0 ? Math.abs(netTreasury.value) : 0));
 const neededLoans = computed(() => (deficit.value > 0 ? Math.ceil(deficit.value / 50) : 0));
 const totalLoans = computed(() => sLoans.value + neededLoans.value);
+const treasuryAfterWages = computed(() => netTreasury.value + neededLoans.value * 50);
 
+// 2. IMF Check
 const fiscalLetter = computed(() => ['A', 'B', 'C'][fiscal.value] ?? 'A');
-
 const imfAlertTriggered = computed(() => {
     if (fiscal.value === 2) {
         return totalLoans.value >= 1;
@@ -21,6 +35,23 @@ const imfAlertTriggered = computed(() => {
         return totalLoans.value >= 2;
     }
 });
+
+// 3. Tax calculations for all classes
+const workerTax = computed(() => incomeTax.value * population.value);
+
+const mIncomeTax = computed(() => incomeTax.value * mEmployments.value);
+const mEmploymentTax = computed(() => taxMultiplier.value * mBusinesses.value);
+const middleTax = computed(() => mIncomeTax.value + mEmploymentTax.value);
+
+const cGrossIncome = computed(() => cRevenue.value - cWages.value + cFoodSold.value);
+const cEmploymentTax = computed(() => taxMultiplier.value * cBusinesses.value);
+const cCorporateTax = computed(() => getCorporateTax(cGrossIncome.value - cEmploymentTax.value, tax.value));
+const capitalistTax = computed(() => cEmploymentTax.value + cCorporateTax.value);
+
+const totalTaxAllClasses = computed(() => workerTax.value + middleTax.value + capitalistTax.value);
+
+// 4. Final Total Treasury with Total Tax from All Classes
+const finalTreasury = computed(() => treasuryAfterWages.value + totalTaxAllClasses.value);
 </script>
 
 <template>
@@ -54,6 +85,7 @@ const imfAlertTriggered = computed(() => {
             </div>
         </div>
 
+        <!-- 1. Treasury after paying Wages (& receiving loans if deficit) -->
         <TaxFormula class="no-select">
             <div class="detailed-content">
                 <div class="label-group no-break">
@@ -73,18 +105,41 @@ const imfAlertTriggered = computed(() => {
                     </div>
                 </template>
             </div>
+
             <span class="detailed-content formula-separator">&rArr;&nbsp;</span>
+
             <span class="formula-result">
-                <span :class="{ 'indicator-warn': imfAlertTriggered }"> {{ totalLoans }} {{ $t('taxes.loans') }} </span>
+                <span :class="{ 'indicator-warn': imfAlertTriggered }">
+                    {{ treasuryAfterWages }} <vardis />
+                </span>
             </span>
         </TaxFormula>
 
+        <!-- IMF Alert Banner -->
         <div v-if="imfAlertTriggered" class="state-imf-alert">
             <div class="parameter-icon icon-imf imf-alert-icon inverted" />
             <div class="imf-alert-text">
                 {{ $t('state.imfAlert', { policy: fiscalLetter, loans: totalLoans }) }}
             </div>
         </div>
+
+        <!-- 2. Final State Treasury with Total Tax from All Classes -->
+        <TaxFormula class="no-select">
+            <div class="detailed-content">
+                <div class="label-group no-break">
+                    <div class="label-group-content">
+                        {{ treasuryAfterWages }} <vardis /> &plus; {{ totalTaxAllClasses }} <vardis /> &equals; {{ finalTreasury }} <vardis />
+                    </div>
+                    <div class="label-group-label">{{ $t('taxes.treasuryAfterWages') }} &plus; {{ $t('taxes.totalTaxes') }}</div>
+                </div>
+            </div>
+
+            <span class="detailed-content formula-separator">&rArr;&nbsp;</span>
+
+            <span class="formula-result">
+                {{ finalTreasury }} <vardis />
+            </span>
+        </TaxFormula>
     </div>
 </template>
 
