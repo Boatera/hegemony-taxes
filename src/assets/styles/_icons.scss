@@ -65,15 +65,13 @@
 }
 
 .icon-imf,
-.tax-formula .tax-formula-icon.icon-imf,
-.tax-formula.detailed .tax-formula-icon.icon-imf {
+.tax-formula:not(.detailed) .tax-formula-icon.icon-imf {
     background-image: url('@/assets/icon-imf-logo.svg');
     background-size: 1.4em;
 }
 
 .lang-de .icon-imf,
-.lang-de .tax-formula .tax-formula-icon.icon-imf,
-.lang-de .tax-formula.detailed .tax-formula-icon.icon-imf {
+.lang-de .tax-formula:not(.detailed) .tax-formula-icon.icon-imf {
     background-image: url('@/assets/icon-imf-logo-de.svg');
 }
 
