@@ -46,7 +46,7 @@ const imfAlertTriggered = computed(() => {
             </div>
             <div class="split">
                 <Tooltip :text="$t('hint.state.loans')">
-                    <div class="parameter-icon icon-loan" />
+                    <div class="parameter-label">{{ $t('taxes.loans') }}</div>
                 </Tooltip>
                 <div class="state-parameter parameter-loans">
                     <NumberInput :min="0" :max="99" v-model.number="sLoans" />
