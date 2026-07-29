@@ -24,6 +24,11 @@ export default defineConfig({
         ViteEjsPlugin(),
         VitePWA({
             registerType: 'autoUpdate',
+            workbox: {
+                cleanupOutdatedCaches: true,
+                skipWaiting: true,
+                clientsClaim: true,
+            },
             includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icons/*.svg', 'fonts/*'],
             manifest: {
                 name: 'Hegemony Taxes',
