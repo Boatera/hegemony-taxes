@@ -1,6 +1,6 @@
 {
     "name": "hegemony-taxes",
-    "version": "1.0.0",     
+    "version": "1.0.1",
     "private": true,
     "homepage": "https://boatera.github.io/hegemony-taxes",
     "repository": {
@@ -9,6 +9,7 @@
     },
     "scripts": {
         "build": "run-p type-check \"build-only {@}\" --",
+        "deploy": "npm run build && gh-pages -d dist",
         "test:unit": "vitest",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
         "build-only": "vite build",
