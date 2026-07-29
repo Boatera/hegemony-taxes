@@ -128,7 +128,7 @@ const totalTaxesCollected = computed(() => {
                     <div class="label-group-content">
                         {{ sTreasury }} <vardis /> &minus; {{ sWages }} <vardis /> &equals; {{ netTreasury }} <vardis />
                     </div>
-                    <div class="label-group-label">{{ $t('taxes.treasury') }} &minus; {{ $t('taxes.wages') }}</div>
+                    <div class="label-group-label">{{ $t('taxes.imf') }} </div>
                 </div>
 
                 <template v-if="deficit > 0">
