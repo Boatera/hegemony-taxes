@@ -21,6 +21,7 @@ export default {
         totalLoans: 'Total Loans',
         finalTreasury: 'Final Treasury',
         imf: 'IMF Check',
+        companySold: 'Company Sold',
     },
     policy: {
         fiscal: 'Fiscal Policy',
@@ -49,6 +50,7 @@ export default {
             treasury: 'State Treasury money',
             wages: 'Wages to be paid',
             loans: 'Current State Loans',
+            companySold: 'Money from Company Sold under IMF',
         },
     },
     state: {

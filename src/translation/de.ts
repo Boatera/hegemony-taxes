@@ -20,7 +20,8 @@ export default {
         neededLoans: 'Benötigte neue Kredite',
         totalLoans: 'Gesamtkredite',
         finalTreasury: 'Endgültige Staatskasse',
-        imf: 'IMF Check',       
+        imf: 'IMF Check',
+        companySold: 'Verkaufte Unternehmen',
     },
     policy: {
         fiscal: 'Fiskalpolitik',
@@ -49,6 +50,7 @@ export default {
             treasury: 'Geld in der Staatskasse',
             wages: 'Zu zahlende Löhne',
             loans: 'Bestehende Staatskredite',
+            companySold: 'Einnahmen aus verkauften Unternehmen bei IWF',
         },
     },
     state: {

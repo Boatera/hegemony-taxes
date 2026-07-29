@@ -13,6 +13,7 @@ export const useClassStore = defineStore('classes', () => {
     const sTreasury = useStorage('classes.sTreasury', 150);
     const sWages = useStorage('classes.sWages', 0);
     const sLoans = useStorage('classes.sLoans', 0);
+    const sCompanySold = useStorage('classes.sCompanySold', 0);
 
     function $reset() {
         population.value = 3;
@@ -26,6 +27,7 @@ export const useClassStore = defineStore('classes', () => {
         sTreasury.value = 150;
         sWages.value = 0;
         sLoans.value = 0;
+        sCompanySold.value = 0;
     }
 
     return {
@@ -40,6 +42,7 @@ export const useClassStore = defineStore('classes', () => {
         sTreasury,
         sWages,
         sLoans,
+        sCompanySold,
         $reset,
     };
 });

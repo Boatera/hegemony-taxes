@@ -21,6 +21,7 @@ export default {
         totalLoans: 'Préstamos totales',
         finalTreasury: 'Tesorería final',
         imf: 'IMF Check',
+        companySold: 'Empresas vendidas',
     },
     policy: {
         fiscal: 'Política fiscal',
@@ -49,6 +50,7 @@ export default {
             treasury: 'Dinero en la tesorería del Estado',
             wages: 'Salarios a pagar',
             loans: 'Préstamos actuales del Estado',
+            companySold: 'Dinero por venta de empresas bajo el FMI',
         },
     },
     state: {
