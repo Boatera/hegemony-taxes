@@ -19,8 +19,6 @@ export default {
         loans: 'Loans',
         neededLoans: 'New Loans Needed',
         totalLoans: 'Total Loans',
-        treasuryAfterWages: 'Treasury after Wages',
-        totalTaxes: 'Total Taxes',
         finalTreasury: 'Final Treasury',
     },
     policy: {

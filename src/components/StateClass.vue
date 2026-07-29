@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import { getPolicyStore } from '@/stores/policies';
 import { getClassStore } from '@/stores/classes';
 import Tooltip from '@/components/Tooltip.vue';
-import { getCorporateTax } from '@/utils/taxes';
 
 const { fiscal, tax, taxMultiplier, incomeTax } = getPolicyStore();
 const {
@@ -19,15 +18,13 @@ const {
     cFoodSold,
 } = getClassStore();
 
-// 1. Treasury after Wages & Loans
 const netTreasury = computed(() => sTreasury.value - sWages.value);
 const deficit = computed(() => (netTreasury.value < 0 ? Math.abs(netTreasury.value) : 0));
 const neededLoans = computed(() => (deficit.value > 0 ? Math.ceil(deficit.value / 50) : 0));
 const totalLoans = computed(() => sLoans.value + neededLoans.value);
-const treasuryAfterWages = computed(() => netTreasury.value + neededLoans.value * 50);
 
-// 2. IMF Check
 const fiscalLetter = computed(() => ['A', 'B', 'C'][fiscal.value] ?? 'A');
+
 const imfAlertTriggered = computed(() => {
     if (fiscal.value === 2) {
         return totalLoans.value >= 1;
@@ -36,22 +33,61 @@ const imfAlertTriggered = computed(() => {
     }
 });
 
-// 3. Tax calculations for all classes
-const workerTax = computed(() => incomeTax.value * population.value);
+const corporateTaxTable = {
+    4: [0, 0, 0],
+    9: [1, 2, 2],
+    24: [5, 5, 4],
+    49: [12, 10, 7],
+    99: [24, 15, 10],
+    199: [40, 30, 20],
+    299: [100, 70, 40],
+    99999: [160, 120, 60],
+};
 
-const mIncomeTax = computed(() => incomeTax.value * mEmployments.value);
-const mEmploymentTax = computed(() => taxMultiplier.value * mBusinesses.value);
-const middleTax = computed(() => mIncomeTax.value + mEmploymentTax.value);
+function getCorporateTax(income: number, policy: number): number {
+    for (const [key, value] of Object.entries(corporateTaxTable)) {
+        if (income <= Number(key)) {
+            return value[policy] ?? NaN;
+        }
+    }
+    return NaN;
+}
 
-const cGrossIncome = computed(() => cRevenue.value - cWages.value + cFoodSold.value);
-const cEmploymentTax = computed(() => taxMultiplier.value * cBusinesses.value);
-const cCorporateTax = computed(() => getCorporateTax(cGrossIncome.value - cEmploymentTax.value, tax.value));
-const capitalistTax = computed(() => cEmploymentTax.value + cCorporateTax.value);
+// Function to calculate the final Treasury sum (Treasury minus Wages plus Loans plus Taxes from all classes)
+function calculateFinalTreasury(): number {
+    const net = sTreasury.value - sWages.value;
+    const def = net < 0 ? Math.abs(net) : 0;
+    const needed = def > 0 ? Math.ceil(def / 50) : 0;
+    const treasuryAfterWagesAndLoans = net + needed * 50;
 
-const totalTaxAllClasses = computed(() => workerTax.value + middleTax.value + capitalistTax.value);
+    const wTax = incomeTax.value * population.value;
+    const mTax = incomeTax.value * mEmployments.value + taxMultiplier.value * mBusinesses.value;
 
-// 4. Final Total Treasury with Total Tax from All Classes
-const finalTreasury = computed(() => treasuryAfterWages.value + totalTaxAllClasses.value);
+    const cGross = cRevenue.value - cWages.value + cFoodSold.value;
+    const cEmpTax = taxMultiplier.value * cBusinesses.value;
+    const cCorpTax = getCorporateTax(cGross - cEmpTax, tax.value);
+    const cTax = cEmpTax + cCorpTax;
+
+    return treasuryAfterWagesAndLoans + wTax + mTax + cTax;
+}
+
+const finalTreasury = computed(() => calculateFinalTreasury());
+
+const treasuryAfterWages = computed(() => {
+    const net = sTreasury.value - sWages.value;
+    const def = net < 0 ? Math.abs(net) : 0;
+    const needed = def > 0 ? Math.ceil(def / 50) : 0;
+    return net + needed * 50;
+});
+
+const totalTaxesCollected = computed(() => {
+    const wTax = incomeTax.value * population.value;
+    const mTax = incomeTax.value * mEmployments.value + taxMultiplier.value * mBusinesses.value;
+    const cGross = cRevenue.value - cWages.value + cFoodSold.value;
+    const cEmpTax = taxMultiplier.value * cBusinesses.value;
+    const cCorpTax = getCorporateTax(cGross - cEmpTax, tax.value);
+    return wTax + mTax + cEmpTax + cCorpTax;
+});
 </script>
 
 <template>
@@ -85,8 +121,8 @@ const finalTreasury = computed(() => treasuryAfterWages.value + totalTaxAllClass
             </div>
         </div>
 
-        <!-- 1. Treasury after paying Wages (& receiving loans if deficit) -->
-        <TaxFormula class="no-select">
+        <!-- First Formula Box: Calculates Loans needed & checks IMF -->
+        <TaxFormula iconClass="icon-imf" class="no-select">
             <div class="detailed-content">
                 <div class="label-group no-break">
                     <div class="label-group-content">
@@ -105,13 +141,9 @@ const finalTreasury = computed(() => treasuryAfterWages.value + totalTaxAllClass
                     </div>
                 </template>
             </div>
-
             <span class="detailed-content formula-separator">&rArr;&nbsp;</span>
-
             <span class="formula-result">
-                <span :class="{ 'indicator-warn': imfAlertTriggered }">
-                    {{ treasuryAfterWages }} <vardis />
-                </span>
+                <span :class="{ 'indicator-warn': imfAlertTriggered }"> {{ totalLoans }} {{ $t('taxes.loans') }} </span>
             </span>
         </TaxFormula>
 
@@ -123,19 +155,17 @@ const finalTreasury = computed(() => treasuryAfterWages.value + totalTaxAllClass
             </div>
         </div>
 
-        <!-- 2. Final State Treasury with Total Tax from All Classes -->
+        <!-- Second Formula Box: Sum of Treasury after deducting Wages plus Taxes collected from all other classes -->
         <TaxFormula class="no-select">
             <div class="detailed-content">
                 <div class="label-group no-break">
                     <div class="label-group-content">
-                        {{ treasuryAfterWages }} <vardis /> &plus; {{ totalTaxAllClasses }} <vardis /> &equals; {{ finalTreasury }} <vardis />
+                        {{ treasuryAfterWages }} <vardis /> &plus; {{ totalTaxesCollected }} <vardis /> &equals; {{ finalTreasury }} <vardis />
                     </div>
-                    <div class="label-group-label">{{ $t('taxes.treasuryAfterWages') }} &plus; {{ $t('taxes.totalTaxes') }}</div>
+                    <div class="label-group-label">{{ $t('taxes.finalTreasury') }}</div>
                 </div>
             </div>
-
             <span class="detailed-content formula-separator">&rArr;&nbsp;</span>
-
             <span class="formula-result">
                 {{ finalTreasury }} <vardis />
             </span>

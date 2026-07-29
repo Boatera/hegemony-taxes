@@ -1,5 +1,13 @@
 <script lang="ts" setup>
 import { getSettingsStore } from '@/stores/settings';
+
+defineProps({
+    iconClass: {
+        type: String,
+        default: '',
+    },
+});
+
 const { showFormula } = getSettingsStore();
 function toggleFormula() {
     showFormula.value = !showFormula.value;
@@ -8,7 +16,7 @@ function toggleFormula() {
 
 <template>
     <div class="tax-formula" :class="{ detailed: showFormula }">
-        <div class="tax-formula-icon" @click.prevent="toggleFormula"></div>
+        <div class="tax-formula-icon" :class="iconClass" @click.prevent="toggleFormula"></div>
         <div class="tax-formula-content">
             <slot></slot>
         </div>

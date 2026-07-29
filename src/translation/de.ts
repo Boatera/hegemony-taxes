@@ -19,8 +19,6 @@ export default {
         loans: 'Kredite',
         neededLoans: 'Benötigte neue Kredite',
         totalLoans: 'Gesamtkredite',
-        treasuryAfterWages: 'Staatskasse nach Löhnen',
-        totalTaxes: 'Steuereinnahmen',
         finalTreasury: 'Endgültige Staatskasse',
     },
     policy: {
