@@ -9,7 +9,6 @@ const {
     sTreasury,
     sWages,
     sLoans,
-    sCompanySold,
     population,
     mBusinesses,
     mEmployments,
@@ -54,6 +53,33 @@ function getCorporateTax(income: number, policy: number): number {
     return NaN;
 }
 
+// Function to calculate the final Treasury sum (Treasury minus Wages plus Loans plus Taxes from all classes)
+function calculateFinalTreasury(): number {
+    const net = sTreasury.value - sWages.value;
+    const def = net < 0 ? Math.abs(net) : 0;
+    const needed = def > 0 ? Math.ceil(def / 50) : 0;
+    const treasuryAfterWagesAndLoans = net + needed * 50;
+
+    const wTax = incomeTax.value * population.value;
+    const mTax = incomeTax.value * mEmployments.value + taxMultiplier.value * mBusinesses.value;
+
+    const cGross = cRevenue.value - cWages.value + cFoodSold.value;
+    const cEmpTax = taxMultiplier.value * cBusinesses.value;
+    const cCorpTax = getCorporateTax(cGross - cEmpTax, tax.value);
+    const cTax = cEmpTax + cCorpTax;
+
+    return treasuryAfterWagesAndLoans + wTax + mTax + cTax;
+}
+
+const finalTreasury = computed(() => calculateFinalTreasury());
+
+const treasuryAfterWages = computed(() => {
+    const net = sTreasury.value - sWages.value;
+    const def = net < 0 ? Math.abs(net) : 0;
+    const needed = def > 0 ? Math.ceil(def / 50) : 0;
+    return net + needed * 50;
+});
+
 const totalTaxesCollected = computed(() => {
     const wTax = incomeTax.value * population.value;
     const mTax = incomeTax.value * mEmployments.value + taxMultiplier.value * mBusinesses.value;
@@ -62,33 +88,13 @@ const totalTaxesCollected = computed(() => {
     const cCorpTax = getCorporateTax(cGross - cEmpTax, tax.value);
     return wTax + mTax + cEmpTax + cCorpTax;
 });
-
-const treasuryAfterWages = computed(() => {
-    if (imfAlertTriggered.value) {
-        const available = sTreasury.value - sWages.value + sCompanySold.value;
-        const loanCost = totalLoans.value * 50;
-        const netAfterLoan = available - loanCost;
-        return netAfterLoan < 0 ? 0 : netAfterLoan;
-    } else {
-        const net = sTreasury.value - sWages.value;
-        const def = net < 0 ? Math.abs(net) : 0;
-        const needed = def > 0 ? Math.ceil(def / 50) : 0;
-        return net + needed * 50;
-    }
-});
-
-function calculateFinalTreasury(): number {
-    return treasuryAfterWages.value + totalTaxesCollected.value;
-}
-
-const finalTreasury = computed(() => calculateFinalTreasury());
 </script>
 
 <template>
     <div class="state-class card">
         <h3>{{ $t('header.state') }}</h3>
 
-        <div class="state-parameters" :class="{ 'has-imf': imfAlertTriggered }">
+        <div class="state-parameters">
             <div class="split">
                 <Tooltip :text="$t('hint.state.treasury')">
                     <div class="parameter-label">{{ $t('taxes.treasury') }}</div>
@@ -111,14 +117,6 @@ const finalTreasury = computed(() => calculateFinalTreasury());
                 </Tooltip>
                 <div class="state-parameter parameter-loans">
                     <NumberInput :min="0" :max="99" v-model.number="sLoans" />
-                </div>
-            </div>
-            <div v-if="imfAlertTriggered" class="split">
-                <Tooltip :text="$t('hint.state.companySold')">
-                    <div class="parameter-label">{{ $t('taxes.companySold') }}</div>
-                </Tooltip>
-                <div class="state-parameter parameter-company-sold">
-                    <NumberInput :min="0" :max="999" :intervalTimeout="40" v-model.number="sCompanySold" />
                 </div>
             </div>
         </div>
@@ -188,15 +186,8 @@ const finalTreasury = computed(() => calculateFinalTreasury());
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
 
-        &.has-imf {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-
         @include bp.below('sm') {
             grid-template-columns: 1fr;
-            &.has-imf {
-                grid-template-columns: 1fr;
-            }
         }
     }
 
