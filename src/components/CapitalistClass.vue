@@ -50,7 +50,7 @@ const corporateTax = computed(() => getCorporateTax(cGrossIncome.value - employm
             <!-- Row 2: Wages and Food Sold -->
             <div class="split">
                 <Tooltip :text="$t('hint.capitalist.wages')">
-                    <div class="parameter-icon icon-wages" />
+                    <div class="parameter-label">{{ $t('taxes.wages') }}</div>
                 </Tooltip>
                 <div class="capitalist-parameter parameter-wages">
                     <NumberInput :min="0" :max="999" :intervalTimeout="40" v-model.number="cWages" />
