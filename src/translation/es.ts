@@ -12,6 +12,7 @@ export default {
         employment: 'Impuesto de empleo',
         revenue: 'Ingresos',
         foodSold: 'Comida vendida',
+        coverNeeds: 'Cubrir necesidades',
         grossIncome: 'Ingresos brutos',
         treasury: 'Tesorería',
         wages: 'Salarios',

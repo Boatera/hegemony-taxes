@@ -12,6 +12,7 @@ export default {
         employment: 'Lohnsteuer',
         revenue: 'Einnahmen',
         foodSold: 'Verkaufte Lebensmittel',
+        coverNeeds: 'Bedürfnisse decken',
         grossIncome: 'Bruttoeinkommen',
         treasury: 'Staatskasse',
         wages: 'Löhne',

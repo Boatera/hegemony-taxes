@@ -12,6 +12,7 @@ export default {
         employment: 'Employment Tax',
         revenue: 'Revenue',
         foodSold: 'Food Sold',
+        coverNeeds: 'Cover Needs',
         grossIncome: 'Gross Income',
         treasury: 'Treasury',
         wages: 'Wages',
