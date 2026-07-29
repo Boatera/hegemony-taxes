@@ -20,6 +20,7 @@ export default {
         neededLoans: 'New Loans Needed',
         totalLoans: 'Total Loans',
         finalTreasury: 'Final Treasury',
+        imf: 'IMF Check',
     },
     policy: {
         fiscal: 'Fiscal Policy',
