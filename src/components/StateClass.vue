@@ -80,7 +80,7 @@ const imfAlertTriggered = computed(() => {
         </TaxFormula>
 
         <div v-if="imfAlertTriggered" class="state-imf-alert">
-            <div class="parameter-icon icon-imf imf-alert-icon" />
+            <div class="parameter-icon icon-imf imf-alert-icon inverted" />
             <div class="imf-alert-text">
                 {{ $t('state.imfAlert', { policy: fiscalLetter, loans: totalLoans }) }}
             </div>
