@@ -20,6 +20,7 @@ export default {
         neededLoans: 'Benötigte neue Kredite',
         totalLoans: 'Gesamtkredite',
         finalTreasury: 'Endgültige Staatskasse',
+        imf: 'IMF Check',       
     },
     policy: {
         fiscal: 'Fiskalpolitik',
