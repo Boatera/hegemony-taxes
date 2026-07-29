@@ -40,7 +40,7 @@ const corporateTax = computed(() => getCorporateTax(cGrossIncome.value - employm
             <!-- Row 1: Revenue field on top (full width) -->
             <div class="split full-width">
                 <Tooltip :text="$t('hint.capitalist.revenue')">
-                    <div class="parameter-icon icon-revenue" />
+                    <div class="parameter-label">{{ $t('taxes.revenue') }}</div>
                 </Tooltip>
                 <div class="capitalist-parameter parameter-revenue">
                     <NumberInput :min="0" :max="999" :intervalTimeout="40" v-model.number="cRevenue" />
@@ -179,6 +179,23 @@ const corporateTax = computed(() => getCorporateTax(cGrossIncome.value - employm
 
     .icon-income {
         background-size: 90%;
+    }
+
+    .split .tooltip-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .parameter-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-align: center;
+        line-height: 1.1;
     }
 }
 </style>
