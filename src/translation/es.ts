@@ -20,6 +20,7 @@ export default {
         neededLoans: 'Nuevos préstamos necesarios',
         totalLoans: 'Préstamos totales',
         finalTreasury: 'Tesorería final',
+        imf: 'IMF Check',
     },
     policy: {
         fiscal: 'Política fiscal',
