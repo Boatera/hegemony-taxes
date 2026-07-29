@@ -1,0 +1,49 @@
+/**
+ * Responsive breakpoints — the app's four tiers in one place.
+ *
+ * Usage:
+ *   @use '@/assets/styles/breakpoints' as bp;   // components
+ *   @use './styles/breakpoints' as bp;          // main.scss
+ *
+ *   .thing {
+ *       @include bp.below('lg') { … }             // max-width: 980px
+ *       @include bp.between('md', 'lg') { … }      // 719px–980px band
+ *   }
+ *
+ * between() is order-insensitive: the two tiers can be named either way.
+ */
+
+@use 'sass:map';
+@use 'sass:math';
+
+$breakpoints: (
+    'xl': 1100px,
+    // large desktop — container column ratio
+    'lg': 980px,
+    // tablet / small desktop
+    'md': 719px,
+    // mobile — single column
+    'sm': 529px,
+    // small mobile
+);
+
+@function bp($name) {
+    @if not map.has-key($breakpoints, $name) {
+        @error 'Unknown breakpoint `#{$name}`. Known: #{map.keys($breakpoints)}.';
+    }
+    @return map.get($breakpoints, $name);
+}
+
+@mixin below($name) {
+    @media (max-width: bp($name)) {
+        @content;
+    }
+}
+
+@mixin between($a, $b) {
+    // Order-insensitive: min-width gets the smaller tier, max-width the larger,
+    // so between('md','lg') and between('lg','md') both yield the same band.
+    @media (min-width: math.min(bp($a), bp($b))) and (max-width: math.max(bp($a), bp($b))) {
+        @content;
+    }
+}

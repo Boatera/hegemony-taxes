@@ -1,0 +1,73 @@
+/**
+ * Design tokens, exposed as CSS custom properties on :root so any component
+ * <style> block can reference them via var(--…) without importing anything.
+ */
+
+:root {
+    /* ---- Typography ---- */
+    --font-body: 'Lato', 'Arial', sans-serif;
+    --font-display: 'Oswald', sans-serif;
+
+    /* ---- Surfaces (dark slate family) ---- */
+    --c-app-bg: #35464d; /* body, #app, modal body, sticky header bg, card text-shadow */
+    --c-app-bg-hi: #3e515a; /* lighter slate for the backdrop glow */
+    --c-surface-settings: #29373c; /* bottom settings bar */
+    --c-surface-multiplier: #26363d; /* tax multiplier card */
+    --c-h3-shadow: #273438; /* h3 text-shadow */
+
+    /* ---- Elevation ---- */
+    /* Layered soft shadows + a light-from-above sheen give the game-coloured
+       cards physical depth without touching their hues. */
+    --card-border: 1px solid rgba(0, 0, 0, 0.35);
+    --card-sheen: linear-gradient(180deg, rgba(210, 210, 210, 0.1), rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, 0.09));
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.28), 0 4px 12px rgba(0, 0, 0, 0.22);
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* ---- Class accents ---- */
+    --c-class-worker: #df0231;
+    --c-class-middle: #fdc300;
+    --c-class-capitalist: #058dda;
+    --c-class-state: #4a607a;
+
+    /* ---- Policy accents ---- */
+    --c-policy-fiscal: #048dc2;
+    --c-policy-labor: #7a6fab;
+    --c-policy-tax: #be53a1;
+    --c-policy-health: #cb1312;
+    --c-policy-education: #f39404;
+
+    /* ---- Middle-class divider ---- */
+    --c-divider: #dfab00;
+    --c-divider-border: #ffcf33;
+
+    /* ---- Feedback / indicators ---- */
+    --c-warn: red;
+    --c-warn-soft: #f38a0e;
+
+    /* ---- Neutrals ---- */
+    --c-black: #000;
+    --c-border-dark: #111;
+    --c-grey-900: #292929;
+    --c-grey-800: #333;
+    --c-grey-700: #4b4949;
+    --c-grey-600: #555;
+    --c-grey-500: #666;
+    --c-grey-450: #777;
+    --c-grey-400: #999;
+    --c-grey-350: #aaa;
+    --c-grey-300: #bbb;
+    --c-grey-250: #ccc;
+    --c-grey-200: #ddd;
+    --c-grey-150: #eee;
+    --c-off-white: #f8f8f8;
+    --c-white: #fff;
+
+    /* ---- NumberSlider ---- */
+    --c-slider-track: #222f34;
+    --c-slider-thumb: #66828b;
+    --c-slider-thumb-hover: #86a2ab;
+    --c-slider-thumb-border: #28353a;
+    --c-slider-thumb-shadow: #3b4d53;
+    --c-slider-label: #ddd;
+    --c-slider-label-shadow: #1d272b;
+}

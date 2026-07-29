@@ -1,0 +1,17 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Roof/pediment -->
+  <path d="M64 16 L112 44 L16 44 Z" fill="#FFFFFF"/>
+
+  <!-- Columns -->
+  <rect x="26" y="52" width="10" height="46" fill="#FFFFFF"/>
+  <rect x="49" y="52" width="10" height="46" fill="#FFFFFF"/>
+  <rect x="69" y="52" width="10" height="46" fill="#FFFFFF"/>
+  <rect x="92" y="52" width="10" height="46" fill="#FFFFFF"/>
+
+  <!-- Top step under roof -->
+  <rect x="20" y="44" width="88" height="6" fill="#FFFFFF"/>
+
+  <!-- Base steps -->
+  <rect x="16" y="98" width="96" height="8" fill="#FFFFFF"/>
+  <rect x="10" y="106" width="108" height="10" fill="#FFFFFF"/>
+</svg>

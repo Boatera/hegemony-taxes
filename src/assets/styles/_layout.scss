@@ -1,0 +1,85 @@
+@use 'breakpoints' as bp;
+
+#app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.4em 0.2em;
+    font-weight: normal;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 3fr; /* Two columns with equal width */
+    grid-gap: 0; /* Gap between grid items */
+    transition: 0.2s ease-in-out;
+}
+
+@include bp.below('xl') {
+    .container {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+@include bp.below('lg') {
+    .container {
+        grid-template-columns: 2fr 5fr;
+    }
+}
+
+@include bp.below('md') {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    #app {
+        padding-right: 0.4em;
+    }
+
+    .tax-multiplier {
+        position: sticky;
+        z-index: 15;
+        top: 0;
+        left: 0;
+        background-color: var(--c-app-bg);
+
+        box-shadow:
+            0 1px 5px var(--c-app-bg),
+            0 2px 5px var(--c-app-bg);
+    }
+
+    .column.class-wrapper {
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+    }
+}
+
+.card {
+    border: var(--card-border);
+    border-radius: 0.6rem;
+    /* Vertical padding scales fluidly with viewport width, replacing the
+       former desktop/mobile step. */
+    padding: clamp(0.75rem, 2vw, 1.25rem) 0.8em;
+    margin: 0.2em;
+    background-image: var(--card-sheen);
+    box-shadow: var(--shadow-card);
+}
+
+.card.narrow {
+    padding: 0.4em 0.8em;
+}
+
+@include bp.below('md') {
+    .card.narrow {
+        padding: 0.6em 0.8em;
+    }
+}
+
+@include bp.between('md', 'lg') {
+    .card.narrow {
+        padding-left: 0.25em;
+    }
+}
+
+.split {
+    display: grid;
+    grid-template-columns: 3.5em auto;
+}

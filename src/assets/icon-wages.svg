@@ -1,0 +1,10 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Wallet/paycheck body -->
+  <rect x="16" y="38" width="96" height="62" rx="8" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- Wallet flap/fold line -->
+  <path d="M16 58 H112" stroke="#FFFFFF" stroke-width="4"/>
+
+  <!-- Clasp / coin circle -->
+  <circle cx="94" cy="58" r="9" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+</svg>

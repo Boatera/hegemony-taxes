@@ -1,0 +1,128 @@
+.icon-position-center {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.icon-workers {
+    background-image: url('@/assets/icon-workers.svg');
+}
+
+.icon-income {
+    background-image: url('@/assets/icon-income.svg');
+}
+
+.icon-business-m {
+    background-image: url('@/assets/icon-business-m.svg');
+}
+
+.icon-business-c {
+    background-image: url('@/assets/icon-business-c.svg');
+}
+
+.icon-business-s {
+    background-image: url('@/assets/icon-business-s.svg');
+}
+
+.icon-revenue {
+    background-image: url('@/assets/icon-revenue.svg');
+}
+
+.icon-wages {
+    background-image: url('@/assets/icon-wages.svg');
+}
+
+.icon-food {
+    background-image: url('@/assets/icon-food.svg');
+}
+
+.icon-treasury {
+    background-image: url('@/assets/icon-treasury.svg');
+}
+
+.icon-loan {
+    background-image: url('@/assets/icon-loan.svg');
+}
+
+.icon-share {
+    background-image: url('@/assets/icon-share.svg');
+}
+
+.icon-formula {
+    background-image: url('@/assets/icon-formula.svg');
+}
+
+.icon-tax-multiplier {
+    background-image: url('@/assets/icon-tax-multiplier.svg');
+}
+
+.icon-tax-multiplier-black {
+    background-image: url('@/assets/icon-tax-multiplier-black.svg');
+}
+
+.icon-automation {
+    background-image: url('@/assets/icon-default.svg');
+}
+
+.icon-imf {
+    background-image: url('@/assets/icon-imf-logo.svg');
+}
+
+.lang-de .icon-imf {
+    background-image: url('@/assets/icon-imf-logo-de.svg');
+}
+
+.icon-imf-label {
+    background-image: url('@/assets/icon-imf-text.svg');
+}
+
+.lang-de .icon-imf-label {
+    background-image: url('@/assets/icon-imf-text-de.svg');
+}
+
+.icon-reset {
+    background-image: url('@/assets/icon-reset.svg');
+}
+
+.parameter-icon {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.indicator-warn {
+    position: relative;
+    display: inline-block;
+}
+
+.indicator-warn::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    z-index: 1;
+
+    width: 1.5em;
+    height: 1.5em;
+    background-color: var(--c-warn);
+    background-image: url('@/assets/indicator_warn.svg');
+    background-size: contain;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-white);
+    font-size: 10px;
+    font-weight: bold;
+
+    -webkit-filter: drop-shadow(0 0 0.25em var(--c-warn));
+    filter: drop-shadow(0 0 0.25em var(--c-warn));
+}
+
+.soft .indicator-warn::after {
+    background-color: var(--c-warn-soft);
+    -webkit-filter: drop-shadow(0 0 0.25em var(--c-warn-soft));
+    filter: drop-shadow(0 0 0.25em var(--c-warn-soft));
+}

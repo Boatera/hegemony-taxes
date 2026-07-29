@@ -1,0 +1,14 @@
+/**
+ * Global stylesheet entry point.
+ *
+ * Only wiring lives here — every rule sits in a focused partial under
+ * ./styles. Order matters: tokens define the :root custom properties that
+ * everything else references, so it comes first.
+ */
+
+@use './styles/tokens';
+@use './styles/icons';
+@use './styles/base';
+@use './styles/layout';
+@use './styles/formula';
+@use './styles/utilities';
